@@ -37,12 +37,63 @@ module DES_Enc_Block(
 /************						************************/
 
 
+wire[63:0]	enc_dout;
+wire		enc_dordy;
+reg[63:0]	cipher_tmp;
+reg			cipher_rdy_tmp;
 
+/*************						**************************/
+assign cipher = cipher_tmp;
+assign cipher_rdy = cipher_rdy_tmp;
 
 /***************					***************************/
 
 	
-
+always@(posedge clk)
+begin
+	if(~rstn)
+	begin
+		cipher_tmp <= 64'd0;
+		cipher_rdy_tmp <= 1'b0;
+	end // if
+	else if(enc_dordy)
+	begin
+		case(mode)
+			3'b000:
+			begin
+				cipher_tmp <= enc_dout;
+				cipher_rdy_tmp <= enc_dordy;
+			end // ECB mode
+			3'b001:
+			begin
+			
+			end // CBC mode
+			3'b010:
+			begin
+			
+			end // CFB mode
+			3'b011:
+			begin
+			
+			end // OFB mode
+			3'b100:
+			begin
+			
+			end // CTR mode
+			3'b101:
+			begin
+			
+			end // GCM mode
+			default:
+			begin
+				cipher_tmp <= 64'd0;
+				cipher_rdy_tmp <= 1'b0;
+			end // default
+		endcase
+	end // else if
+	else
+		cipher_rdy_tmp <= 1'b0;
+end
 
 /***************					***************************/
 DES_Enc	DES_Enc(
@@ -51,8 +102,8 @@ DES_Enc	DES_Enc(
     .plain		(plain),
     .plain_en	(plain_en),
     .key		(key),
-    .cipher		(cipher),
-    .cipher_rdy	(cipher_rdy)
+    .cipher		(enc_dout),
+    .cipher_rdy	(enc_dordy)
     );	
 	
 endmodule
