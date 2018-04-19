@@ -46,7 +46,7 @@ wire[27:0]		d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15
 
 wire[55:0]		cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12, cd13, cd14, cd15, cd16;
 /*************		初始密钥置换			*****************/
-assign key_PC1 = {key[7], key[15], key[23], key[31], key[39], key[47], key[55], key[63], key[4], key[14], key[22], key[30], key[38], key[46], key[54], key[62], key[5], key[13], key[21], key[29], key[37], key[45], key[53], key[61], key[4], key[12], key[20], key[28], key[1], key[9], key[17], key[25], key[33], key[41], key[49], key[57], key[2], key[10], key[18], key[26], key[34], key[42], key[50], key[58], key[3], key[11], key[19], key[27], key[35], key[43], key[51], key[59], key[36], key[44], key[52], key[60]};
+assign key_PC1 = {key[7], key[15], key[23], key[31], key[39], key[47], key[55], key[63], key[6], key[14], key[22], key[30], key[38], key[46], key[54], key[62], key[5], key[13], key[21], key[29], key[37], key[45], key[53], key[61], key[4], key[12], key[20], key[28], key[1], key[9], key[17], key[25], key[33], key[41], key[49], key[57], key[2], key[10], key[18], key[26], key[34], key[42], key[50], key[58], key[3], key[11], key[19], key[27], key[35], key[43], key[51], key[59], key[36], key[44], key[52], key[60]};
 
 /****************	轮密钥置换			*************************/
 assign subkey1 = {cd1[42], cd1[39], cd1[45], cd1[32], cd1[55], cd1[51], cd1[53], cd1[28], cd1[41], cd1[50], cd1[35], cd1[46], cd1[33], cd1[37], cd1[44], cd1[52], cd1[30], cd1[48], cd1[40], cd1[49], cd1[29], cd1[36], cd1[43], cd1[54], cd1[15], cd1[4], cd1[25], cd1[19], cd1[9], cd1[1], cd1[26], cd1[16], cd1[5], cd1[11], cd1[23], cd1[8], cd1[12], cd1[7], cd1[17], cd1[0], cd1[22], cd1[3], cd1[10], cd1[14], cd1[6], cd1[20], cd1[27], cd1[24]};

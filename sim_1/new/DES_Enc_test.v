@@ -23,14 +23,28 @@
 module DES_Enc_test();
 
 /************					*********************/
+parameter		BLOCK_CNT = 2**20;
+
+
 reg				clock, resetn;
 reg[63:0]		plain;
 reg				plain_en;
 reg[63:0]		key;
 wire[63:0]		cipher;
 wire			cipher_rdy;
+reg[31:0]		cnt;
 
+integer data_file, i;
+integer result_file;
 /************					*******************/
+initial
+	data_file = $fopen("D:/Work/Cipher/Des/Data/rand_64bit.dat", "rb");
+
+initial
+	result_file = $fopen("D:/Work/Cipher/Des/Data/rand_64bit_Dec_ECB.dat", "wb");
+
+
+/************					******************/
 initial
 begin
 	clock <= 1'b0;
@@ -52,16 +66,29 @@ begin
 		plain <= 64'd0;
 		plain_en <= 1'b0;
 		key <= 64'd0;
+		cnt <= 32'd0;
 	end
 	else
 	begin
-		plain_en <= ~ plain_en;
-		plain <= 64'h0001020304050607;
-		key <= 64'h133457799BBCDFF1;
+		if(cnt < BLOCK_CNT)
+		begin
+			plain_en <= 1'b1;
+			// plain <= 64'h0001020304050607;
+			i = $fread(plain, data_file);
+			key <= 64'h133457799BBCDFF1;
+			cnt <= cnt + 1;
+		end
+		else
+			plain_en <= 1'b0;
+			
 	end
 end
 
-
+always@(posedge clock)
+begin
+	if(cipher_rdy)
+		$fwrite(result_file, "%u", {cipher[39:32], cipher[47:40], cipher[55:48], cipher[63:56], cipher[7:0], cipher[15:8], cipher[23:16], cipher[31:24]});
+end
 
 /*******					******************/
 DES_Enc	DUT(
